@@ -1,11 +1,9 @@
 package com.claesson.spbe.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "play")
@@ -21,8 +19,7 @@ public class Play {
   @JsonManagedReference
   private List<Act> acts = new ArrayList<>();
 
-  public Play() {
-  }
+  public Play() {}
 
   public Play(String title) {
     this.title = title;

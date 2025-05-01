@@ -1,12 +1,10 @@
 package com.claesson.spbe.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.claesson.spbe.model.Act;
 import com.claesson.spbe.model.Play;
 import com.claesson.spbe.repository.postgres.PlayRepositoryPG;
+import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PlayService {
