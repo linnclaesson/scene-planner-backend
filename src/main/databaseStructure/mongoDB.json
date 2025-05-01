@@ -1,0 +1,84 @@
+{
+    "plays": [
+        {
+            "id": "UUID1",
+            "name": "GIII",
+            "semester": "HT2023",
+            "acts": [
+                {
+                    "id": "UUID-ACT-1",
+                    "name": "Act 1",
+                    "scenes": [
+                        {
+                            "id": "UUID-SCENE-1",
+                            "number": 1,
+                            "name": "Gustav är arg",
+                            "actors": [
+                                {
+                                    "id": "a1",
+                                    "name": "Egon Fjällgren"
+                                },
+                                {
+                                    "id": "a2",
+                                    "name": "Alice Berg"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "UUID-SCENE-2",
+                            "number": 2,
+                            "name": "En nyhet",
+                            "rolesInScene": ["r2", "r3"]
+                        }
+                    ]
+                },
+                {
+                    "id": "UUID-ACT-2",
+                    "number": 2,
+                    "name": "Act 2",
+                    "scenes": [
+                        {
+                            "id": "UUID-SCENE-3",
+                            "number": 3,
+                            "name": "Allt är kaos",
+                            "rolesInScene": ["r1", "r3"]
+                        }
+                    ]
+                }
+            ],
+            "roles": [
+                {
+                    "id": "r1",
+                    "name": "Gustav"
+                },
+                {
+                    "id": "r2",
+                    "name": "Kristina",
+                    "description": "Queen of Sweden"
+                },
+                {
+                    "id": "r3",
+                    "name": "Messenger"
+                }
+            ],
+
+            "actorRoleAssignments": [
+                {
+                    "id": "ara1",
+                    "actorId": "a1",
+                    "roleId": "r1"
+                },
+                {
+                    "id": "ara2",
+                    "actorId": "a2",
+                    "roleId": "r2"
+                },
+                {
+                    "id": "ara3",
+                    "actorId": "a2",
+                    "roleId": "r3"
+                }
+            ]
+        }
+    ]
+}

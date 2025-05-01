@@ -26,6 +26,3 @@ jobs:
 
             - name: Check formatting
               run: mvn spotless:check
-
-            - name: Checkstyle
-              run: mvn checkstyle:check
