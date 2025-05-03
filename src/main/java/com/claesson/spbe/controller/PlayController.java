@@ -25,7 +25,7 @@ public class PlayController {
     return ResponseEntity.ok(playService.getAllPlays());
   }
 
-  @PostMapping
+  @PostMapping(consumes = {"application/json", "application/json;charset=UTF-8"})
   public ResponseEntity<Play> createPlay(@RequestBody Play play) {
     Play created = playService.createPlay(play);
     return ResponseEntity.ok(created);
