@@ -1,7 +1,6 @@
 package com.claesson.spbe.service;
 
 import com.claesson.spbe.model.Actor;
-import com.claesson.spbe.model.Role;
 import com.claesson.spbe.repository.postgres.ActorRepositoryPG;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -25,22 +24,11 @@ public class ActorService {
   }
 
   public Actor createActor(Actor actor) {
-    if (actor.getRoles() != null) {
-      for (Role role : actor.getRoles()) {
-        role.setActor(actor);
-      }
-    }
     return actorRepositoryPG.save(actor);
   }
 
   public void deleteActor(Long id) {
     Actor actor = actorRepositoryPG.findById(id).orElseThrow();
-
-    for (Role role : actor.getRoles()) {
-      role.setActor(null);
-    }
-
-    actor.setRoles(null);
     actorRepositoryPG.delete(actor);
   }
 }

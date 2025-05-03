@@ -33,9 +33,9 @@ public class RoleController {
     return roleService.getRoleById(id);
   }
 
-  @PostMapping("/actor/{actor_id}")
-  public ResponseEntity<Role> createRole(@PathVariable Long actor_id, @RequestBody Role role) {
-    Role createdRole = roleService.createRole(role, actor_id);
+  @PostMapping("/play/{play_id}")
+  public ResponseEntity<Role> createRole(@PathVariable Long play_id, @RequestBody Role role) {
+    Role createdRole = roleService.createRole(role, play_id);
     return ResponseEntity.ok(createdRole);
   }
 
@@ -43,7 +43,7 @@ public class RoleController {
   public ResponseEntity<?> deleteRole(@PathVariable Long id) {
     try {
       roleService.deleteRole(id);
-      return ResponseEntity.status(HttpStatus.CREATED).body("Role deleted successfully");
+      return ResponseEntity.ok("Role deleted successfully");
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting role");
     }

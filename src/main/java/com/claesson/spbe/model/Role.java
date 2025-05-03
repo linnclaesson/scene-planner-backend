@@ -20,9 +20,9 @@ public class Role {
   private String name;
 
   @ManyToOne
-  @JoinColumn(name = "actor_id")
+  @JoinColumn(name = "play_id")
   @JsonBackReference
-  private Actor actor;
+  private Play play;
 
   // Constructors
   public Role() {}
@@ -44,11 +44,11 @@ public class Role {
     this.name = name;
   }
 
-  public Actor getActor() {
-    return actor;
+  public Play getPlay() {
+    return play;
   }
 
-  public void setActor(Actor actor) {
-    this.actor = actor;
+  public void setPlay(Play play) {
+    this.play = play;
   }
 }
