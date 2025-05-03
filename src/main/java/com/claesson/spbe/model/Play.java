@@ -19,11 +19,19 @@ public class Play {
   @JsonManagedReference
   private List<Act> acts = new ArrayList<>();
 
+  @OneToMany(mappedBy = "play", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference
+  private List<Role> roles = new ArrayList<>();
+
+  // Constructors
+
   public Play() {}
 
   public Play(String title) {
     this.title = title;
   }
+
+  // Getters &
 
   public Long getId() {
     return id;
@@ -45,8 +53,23 @@ public class Play {
     this.acts = acts;
   }
 
+  public List<Role> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<Role> roles) {
+    this.roles = roles;
+  }
+
+  // Methods
+
   public void addAct(Act act) {
     this.acts.add(act);
     act.setPlay(this);
+  }
+
+  public void addRole(Role role) {
+    this.roles.add(role);
+    role.setPlay(this);
   }
 }

@@ -1,8 +1,8 @@
 package com.claesson.spbe.service;
 
-import com.claesson.spbe.model.Actor;
+import com.claesson.spbe.model.Play;
 import com.claesson.spbe.model.Role;
-import com.claesson.spbe.repository.postgres.ActorRepositoryPG;
+import com.claesson.spbe.repository.postgres.PlayRepositoryPG;
 import com.claesson.spbe.repository.postgres.RoleRepositoryPG;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class RoleService {
 
   private final RoleRepositoryPG roleRepositoryPG;
-  private final ActorRepositoryPG actorRepositoryPG;
+  private final PlayRepositoryPG playRepositoryPG;
 
-  public RoleService(RoleRepositoryPG roleRepositoryPG, ActorRepositoryPG actorRepositoryPG) {
+  public RoleService(RoleRepositoryPG roleRepositoryPG, PlayRepositoryPG playRepositoryPG) {
     this.roleRepositoryPG = roleRepositoryPG;
-    this.actorRepositoryPG = actorRepositoryPG;
+    this.playRepositoryPG = playRepositoryPG;
   }
 
   public List<Role> getAllRoles() {
@@ -27,9 +27,9 @@ public class RoleService {
     return role;
   }
 
-  public Role createRole(Role role, Long actor_id) {
-    Actor actor = actorRepositoryPG.findById(actor_id).orElseThrow();
-    role.setActor(actor);
+  public Role createRole(Role role, Long play_id) {
+    Play play = playRepositoryPG.findById(play_id).orElseThrow();
+    role.setPlay(play);
     return roleRepositoryPG.save(role);
   }
 

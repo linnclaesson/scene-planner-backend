@@ -1,7 +1,6 @@
 package com.claesson.spbe.controller;
 
 import com.claesson.spbe.model.Actor;
-import com.claesson.spbe.model.Role;
 import com.claesson.spbe.service.ActorService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -34,12 +33,6 @@ public class ActorController {
     return actorService.getActorById(id);
   }
 
-  @GetMapping("/{id}/roles")
-  public List<Role> getAllRolesByActorId(@PathVariable Long id) {
-    Actor actor = actorService.getActorById(id);
-    return actor.getRoles();
-  }
-
   @PostMapping
   public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
     Actor createdActor = actorService.createActor(actor);
@@ -50,7 +43,7 @@ public class ActorController {
   public ResponseEntity<?> deleteActor(@PathVariable Long id) {
     try {
       actorService.deleteActor(id);
-      return ResponseEntity.status(HttpStatus.CREATED).body("Actor deleted successfully");
+      return ResponseEntity.ok("Actor deleted successfully");
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting actor");
     }
