@@ -50,7 +50,7 @@ public class ActController {
   public ResponseEntity<?> deleteAct(@PathVariable Long id) {
     try {
       actService.deleteAct(id);
-      return ResponseEntity.status(HttpStatus.CREATED).body("Act deleted successfully!");
+      return ResponseEntity.ok("Act deleted successfully!");
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting act");
     }
