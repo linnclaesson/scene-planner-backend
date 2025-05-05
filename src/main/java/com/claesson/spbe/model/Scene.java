@@ -35,6 +35,7 @@ public class Scene {
   private List<SceneRoleAssignment> sceneRoleAssignments = new ArrayList<>();
 
   @ManyToMany(mappedBy = "scenes")
+  @JsonBackReference
   private List<Rehearsal> rehearsals = new ArrayList<>();
 
   // Constructors
