@@ -1,7 +1,13 @@
 package com.claesson.spbe.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +21,14 @@ public class Play {
 
   private String title;
 
+  private String semester;
+
   @OneToMany(mappedBy = "play", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference
+  @JsonManagedReference("play-act")
   private List<Act> acts = new ArrayList<>();
 
   @OneToMany(mappedBy = "play", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference
+  @JsonManagedReference("play-role")
   private List<Role> roles = new ArrayList<>();
 
   // Constructors
@@ -29,6 +37,13 @@ public class Play {
 
   public Play(String title) {
     this.title = title;
+  }
+
+  public Play(String title, String semester, List<Act> acts, List<Role> roles) {
+    this.title = title;
+    this.semester = semester;
+    this.acts = acts != null ? acts : new ArrayList<>();
+    this.roles = roles != null ? roles : new ArrayList<>();
   }
 
   // Getters &
@@ -43,6 +58,14 @@ public class Play {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getSemester() {
+    return semester;
+  }
+
+  public void setSemester(String semester) {
+    this.semester = semester;
   }
 
   public List<Act> getActs() {

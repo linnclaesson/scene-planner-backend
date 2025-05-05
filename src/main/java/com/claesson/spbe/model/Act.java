@@ -26,11 +26,11 @@ public class Act {
 
   @ManyToOne
   @JoinColumn(name = "play_id")
-  @JsonBackReference
+  @JsonBackReference("play-act")
   private Play play;
 
   @OneToMany(mappedBy = "act", cascade = CascadeType.ALL)
-  @JsonManagedReference
+  @JsonManagedReference("act-scene")
   private List<Scene> scenes = new ArrayList<>();
 
   // Constructors
