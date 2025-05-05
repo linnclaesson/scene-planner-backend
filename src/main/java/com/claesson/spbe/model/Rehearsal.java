@@ -1,6 +1,5 @@
 package com.claesson.spbe.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +23,6 @@ public class Rehearsal {
   private LocalDate date;
 
   @ManyToMany
-  @JsonManagedReference
   @JoinTable(
       name = "rehearsal_scene",
       joinColumns = @JoinColumn(name = "rehearsal_id"),

@@ -21,7 +21,7 @@ public class Role {
 
   @ManyToOne
   @JoinColumn(name = "play_id")
-  @JsonBackReference
+  @JsonBackReference("play-role")
   private Play play;
 
   // Constructors

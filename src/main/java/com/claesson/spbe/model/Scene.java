@@ -1,6 +1,7 @@
 package com.claesson.spbe.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ public class Scene {
 
   @ManyToOne
   @JoinColumn(name = "act_id")
-  @JsonBackReference
+  @JsonBackReference("act-scene")
   private Act act;
 
   @OneToMany(mappedBy = "scene", cascade = CascadeType.ALL)
@@ -35,7 +36,7 @@ public class Scene {
   private List<SceneRoleAssignment> sceneRoleAssignments = new ArrayList<>();
 
   @ManyToMany(mappedBy = "scenes")
-  @JsonBackReference
+  @JsonIgnore
   private List<Rehearsal> rehearsals = new ArrayList<>();
 
   // Constructors
