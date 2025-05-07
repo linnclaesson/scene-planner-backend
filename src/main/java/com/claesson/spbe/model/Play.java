@@ -31,6 +31,10 @@ public class Play {
   @JsonManagedReference("play-role")
   private List<Role> roles = new ArrayList<>();
 
+  @OneToMany(mappedBy = "play", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference("play-rehearsal")
+  private List<Rehearsal> rehearsals = new ArrayList<>();
+
   // Constructors
 
   public Play() {}
@@ -39,11 +43,13 @@ public class Play {
     this.title = title;
   }
 
-  public Play(String title, String semester, List<Act> acts, List<Role> roles) {
+  public Play(
+      String title, String semester, List<Act> acts, List<Role> roles, List<Rehearsal> rehearsals) {
     this.title = title;
     this.semester = semester;
     this.acts = acts != null ? acts : new ArrayList<>();
     this.roles = roles != null ? roles : new ArrayList<>();
+    this.rehearsals = rehearsals != null ? rehearsals : new ArrayList<>();
   }
 
   // Getters &
@@ -84,6 +90,14 @@ public class Play {
     this.roles = roles;
   }
 
+  public List<Rehearsal> getRehearsals() {
+    return rehearsals;
+  }
+
+  public void setRehearsals(List<Rehearsal> rehearsals) {
+    this.rehearsals = rehearsals;
+  }
+
   // Methods
 
   public void addAct(Act act) {
@@ -94,5 +108,10 @@ public class Play {
   public void addRole(Role role) {
     this.roles.add(role);
     role.setPlay(this);
+  }
+
+  public void addRehearsal(Rehearsal rehearsal) {
+    this.rehearsals.add(rehearsal);
+    rehearsal.setPlay(this);
   }
 }

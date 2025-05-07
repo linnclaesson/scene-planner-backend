@@ -35,6 +35,11 @@ public class RehearsalController {
     return rehearsalService.getRehearsalById(id);
   }
 
+  @GetMapping("/play/{playId}")
+  public List<Rehearsal> getRehearsalsByPlayId(@PathVariable Long playId) {
+    return rehearsalService.getRehearsalsByPlayId(playId);
+  }
+
   @GetMapping("/{id}/assignments")
   public ResponseEntity<List<SceneRoleAssignment>> getSceneRoleAssignments(@PathVariable Long id) {
     List<SceneRoleAssignment> assignments =
@@ -42,10 +47,11 @@ public class RehearsalController {
     return ResponseEntity.ok(assignments);
   }
 
-  @PostMapping
-  public ResponseEntity<Rehearsal> createRehearsal(@RequestBody Rehearsal rehearsal) {
-    Rehearsal createdRehearsal = rehearsalService.createRehearsal(rehearsal);
-    return ResponseEntity.ok(createdRehearsal);
+  @PostMapping("/play/{playId}")
+  public ResponseEntity<Rehearsal> createRehearsal(
+      @PathVariable Long playId, @RequestBody Rehearsal rehearsal) {
+    Rehearsal createdRehearsal = rehearsalService.createRehearsal(playId, rehearsal);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdRehearsal);
   }
 
   @DeleteMapping("/delete/{id}")
