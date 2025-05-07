@@ -33,6 +33,12 @@ public class SceneController {
     return sceneService.getSceneById(id);
   }
 
+  @GetMapping("/play/{playId}")
+  public ResponseEntity<List<Scene>> getScenesByPlayId(@PathVariable Long playId) {
+    List<Scene> scenes = sceneService.getScenesByPlayId(playId);
+    return ResponseEntity.ok(scenes);
+  }
+
   @PostMapping("/act/{act_id}")
   public ResponseEntity<Scene> createScene(@PathVariable Long act_id, @RequestBody Scene scene) {
     Scene createdScene = sceneService.createScene(scene, act_id);

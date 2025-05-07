@@ -30,6 +30,10 @@ public class SceneService {
     return scene;
   }
 
+  public List<Scene> getScenesByPlayId(Long play_id) {
+    return sceneRepositoryPG.findByAct_Play_Id(play_id);
+  }
+
   public Scene createScene(Scene scene, Long act_id) {
     Act act =
         actRepositoryPG

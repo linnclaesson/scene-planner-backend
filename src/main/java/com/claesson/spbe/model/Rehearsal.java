@@ -1,5 +1,6 @@
 package com.claesson.spbe.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +30,11 @@ public class Rehearsal {
       joinColumns = @JoinColumn(name = "rehearsal_id"),
       inverseJoinColumns = @JoinColumn(name = "scene_id"))
   private List<Scene> scenes = new ArrayList<>();
+
+  @ManyToOne
+  @JoinColumn(name = "play_id")
+  @JsonBackReference("play-rehearsal")
+  private Play play;
 
   // Constructors
 
@@ -62,6 +69,14 @@ public class Rehearsal {
 
   public void setScenes(List<Scene> scenes) {
     this.scenes = scenes;
+  }
+
+  public Play getPlay() {
+    return play;
+  }
+
+  public void setPlay(Play play) {
+    this.play = play;
   }
 
   // Methods

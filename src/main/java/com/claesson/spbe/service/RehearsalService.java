@@ -1,8 +1,10 @@
 package com.claesson.spbe.service;
 
+import com.claesson.spbe.model.Play;
 import com.claesson.spbe.model.Rehearsal;
 import com.claesson.spbe.model.Scene;
 import com.claesson.spbe.model.SceneRoleAssignment;
+import com.claesson.spbe.repository.postgres.PlayRepositoryPG;
 import com.claesson.spbe.repository.postgres.RehearsalRepositoryPG;
 import com.claesson.spbe.repository.postgres.SceneRepositoryPG;
 import java.util.ArrayList;
@@ -16,11 +18,15 @@ public class RehearsalService {
 
   private final RehearsalRepositoryPG rehearsalRepositoryPG;
   private final SceneRepositoryPG sceneRepositoryPG;
+  private final PlayRepositoryPG playRepositoryPG;
 
   public RehearsalService(
-      RehearsalRepositoryPG rehearsalRepositoryPG, SceneRepositoryPG sceneRepositoryPG) {
+      RehearsalRepositoryPG rehearsalRepositoryPG,
+      SceneRepositoryPG sceneRepositoryPG,
+      PlayRepositoryPG playRepositoryPG) {
     this.rehearsalRepositoryPG = rehearsalRepositoryPG;
     this.sceneRepositoryPG = sceneRepositoryPG;
+    this.playRepositoryPG = playRepositoryPG;
   }
 
   public List<Rehearsal> getAllRehearsals() {
@@ -36,6 +42,10 @@ public class RehearsalService {
     return rehearsal;
   }
 
+  public List<Rehearsal> getRehearsalsByPlayId(Long playId) {
+    return rehearsalRepositoryPG.findByPlayId(playId);
+  }
+
   public List<SceneRoleAssignment> getSceneRoleAssignmentsForRehearsal(Long id) {
     Rehearsal rehearsal = getRehearsalById(id);
     List<Scene> scenes = rehearsal.getScenes();
@@ -46,15 +56,28 @@ public class RehearsalService {
     return allAssignments;
   }
 
-  public Rehearsal createRehearsal(Rehearsal rehearsal) {
+  public Rehearsal createRehearsal(Long playId, Rehearsal rehearsal) {
+    Play play =
+        playRepositoryPG
+            .findById(playId)
+            .orElseThrow(
+                () -> new IllegalArgumentException("Could not find play with id " + playId));
+    rehearsal.setPlay(play);
     return rehearsalRepositoryPG.save(rehearsal);
   }
 
   public void deleteRehearsal(Long id) {
-    if (!rehearsalRepositoryPG.existsById(id)) {
-      throw new IllegalArgumentException("Could not find rehearsal with id " + id);
+    Rehearsal rehearsal =
+        rehearsalRepositoryPG
+            .findById(id)
+            .orElseThrow(
+                () -> new IllegalArgumentException("Could not find rehearsal with id " + id));
+    Play play = rehearsal.getPlay();
+    if (play != null) {
+      play.getRehearsals().remove(rehearsal);
     }
-    rehearsalRepositoryPG.deleteById(id);
+
+    rehearsalRepositoryPG.delete(rehearsal);
   }
 
   public Rehearsal addSceneToRehearsal(Long rehearsalId, Long sceneId) {
@@ -64,9 +87,8 @@ public class RehearsalService {
             .findById(sceneId)
             .orElseThrow(
                 () -> new IllegalArgumentException("Could not find scene with id " + sceneId));
-    if (!rehearsal.getScenes().contains(scene)) {
-      rehearsal.getScenes().add(scene);
-    }
+
+    rehearsal.addScene(scene);
     return rehearsalRepositoryPG.save(rehearsal);
   }
 
@@ -77,11 +99,8 @@ public class RehearsalService {
             .findById(sceneId)
             .orElseThrow(
                 () -> new IllegalArgumentException("Could not find scene with id " + sceneId));
-    boolean removed = rehearsal.getScenes().remove(scene);
-    if (!removed) {
-      throw new IllegalArgumentException(
-          "Scene with id " + sceneId + " is not assigned to rehearsal " + rehearsalId);
-    }
+
+    rehearsal.removeScene(scene);
     return rehearsalRepositoryPG.save(rehearsal);
   }
 }
